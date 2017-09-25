@@ -1,0 +1,70 @@
+	<!Doctype html>
+	<html>
+	<link rel="stylesheet" href="css/jquery_mobile.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="js/jquery-1.11.js"></script>
+	<script src="js/jquery_mobile_1.4.5.js"></script>
+	<script type="text/javascript" src="js/emailjs.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+
+		$("#another").on('click', function() {
+			$("#support_form").find('input:text').val('');
+		});
+
+		/*$("#exit").on('click', function(){
+		  window.top.close();
+		  });*/
+
+		(function(){
+		 emailjs.init("user_fe85XbAfx7QVGkqT7B3PD");
+		})();
+
+		$("#submit").on('click', function(){
+			emailjs
+			.send("gmail", "template_ciJzFN86", {
+				from_name: $("#name").val(), 
+				question : $("#desc").val(), 
+				email : $("#email").val(),
+				mobile: $("mobile").val()
+			})
+			.then(function(response) {
+				console.log("SUCCESS. status=%d, text=%s", response.status, response.text);
+			}, function(err) {
+				console.log("FAILED. error=", err);
+			});
+		});
+
+	});
+	</script>
+	<body>
+	<div data-role="page" id="support_form">
+	<div data-role="header">
+	<h1>Support</h1>
+	</div>
+
+	<div role="main" class="ui-content">
+	<label>Name  : </label>
+	<input type="text" name="name" id="name" value="" placeholder="Enter Name"/>
+	<label>Email : </label>
+	<input type="text" name="email" id="email" value="" placeholder="Enter Email"/>
+	<label>Mobile : </label>
+	<input type="text" name="mobile" id="mobile" value="" placeholder="Enter Mobile number"/>
+	<label>Question : </label>
+	<textarea type="text" name="desc" id="desc" value="" placeholder="Enter your question"></textarea>
+	</div>
+	<a class="ui-btn" id="submit" href="#response">submit</a>
+	<div data-role="footer">
+	<h6>gtvani@gmail.com</h6>
+	</div>
+	</div>
+
+
+	<div data-role="page" id="response">
+	<p>Thank you for response :)</p>
+	<p>Mail sent to support team.. We will contact you shortly..</p>
+	<a id="another" class="ui-btn" href="#support_form">submit another</a>
+	<a id="exit" class="ui-btn" href="#">Exit</a>
+	</div>
+	</body>
+	</html>
